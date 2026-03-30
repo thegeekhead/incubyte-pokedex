@@ -171,3 +171,22 @@ describe("Detail page", () => {
     });
   });
 });
+
+describe("Accessibility", () => {
+  it("cards have aria-label", async () => {
+    render(<App />);
+    await waitFor(() => screen.getAllByTestId("pokemon-card"));
+    expect(screen.getByLabelText("View bulbasaur")).toBeInTheDocument();
+  });
+
+  it("cards are keyboard navigable with Enter", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await waitFor(() => screen.getAllByTestId("pokemon-card"));
+    screen.getByLabelText("View bulbasaur").focus();
+    await user.keyboard("{Enter}");
+    await waitFor(() => {
+      expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("bulbasaur");
+    });
+  });
+});
