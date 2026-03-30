@@ -17,4 +17,14 @@ describe("getTypeColor()", () => {
   it("returns fallback for unknown type", () => {
     expect(getTypeColor("unknown").bg).toBe("#888");
   });
+  it("handles all 18 standard types without falling back", () => {
+    const types = [
+      "fire", "water", "grass", "electric", "ice", "fighting",
+      "poison", "ground", "flying", "psychic", "bug", "rock",
+      "ghost", "dragon", "dark", "steel", "fairy", "normal",
+    ];
+    types.forEach((type) => {
+      expect(getTypeColor(type).bg).not.toBe("#888");
+    });
+  });
 });
