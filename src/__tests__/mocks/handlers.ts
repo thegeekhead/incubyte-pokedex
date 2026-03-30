@@ -1,0 +1,14 @@
+import { http, HttpResponse } from "msw";
+
+export const handlers = [
+  http.get("https://pokeapi.co/api/v2/pokemon", () =>
+    HttpResponse.json({
+      count: 3,
+      results: [
+        { name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/" },
+        { name: "charmander", url: "https://pokeapi.co/api/v2/pokemon/4/" },
+        { name: "squirtle", url: "https://pokeapi.co/api/v2/pokemon/7/" },
+      ],
+    })
+  ),
+];
