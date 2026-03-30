@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterEach, afterAll } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import { server } from "./mocks/server";
 import App from "../App";
 import userEvent from "@testing-library/user-event";
@@ -105,3 +105,22 @@ describe("Type filters", () => {
   });
 });
 
+describe("Sort", () => {
+  it("sorts by name alphabetically", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await waitFor(() => screen.getAllByTestId("pokemon-card"));
+    await user.selectOptions(screen.getByTestId("sort-select"), "name");
+    const cards = screen.getAllByTestId("pokemon-card");
+    expect(within(cards[0]).getByText("bulbasaur")).toBeInTheDocument();
+  });
+
+  it("sorts by HP descending", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await waitFor(() => screen.getAllByTestId("pokemon-card"));
+    await user.selectOptions(screen.getByTestId("sort-select"), "hp");
+    const cards = screen.getAllByTestId("pokemon-card");
+    expect(within(cards[0]).getByText("bulbasaur")).toBeInTheDocument();
+  });
+});
