@@ -12,3 +12,6 @@ export const getFlavorText = (species: PokemonSpecies | null): string => {
   );
   return en?.flavor_text.replace(/[\n\f]/g, " ") ?? "";
 };
+
+export const getSprite = (id: number): string =>
+  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
