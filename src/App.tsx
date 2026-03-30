@@ -63,6 +63,12 @@ export default function App() {
         }}>
           Pokédex
         </h1>
+        <div style={{
+          fontFamily: "'DM Mono', monospace",
+          fontSize: 12, color: "#555", marginTop: 8,
+        }}>
+          {loading ? "Loading…" : `${filtered.length} / ${pokemon.length} Pokémon`}
+        </div>
       </div>
       <div style={{ background: "#fff", borderBottom: "0.5px solid #eee", padding: "16px 24px" }}>
         <input
@@ -78,7 +84,11 @@ export default function App() {
         <select data-testid="sort-select" value={sort}
           onChange={(e) => setSort(e.target.value as "id" | "name" | "hp")}
           style={{
-            height: 40, padding: "0 12px", border: "0.5px solid #ddd", borderRadius: 10, fontSize: 13, background: "#fafaf7", color: "#333", cursor: "pointer", outline: "none",
+            height: 40, padding: "0 12px",
+            border: "0.5px solid #ddd", borderRadius: 10,
+            fontFamily: "'DM Mono', monospace", fontSize: 12,
+            background: "#fafaf7", color: "#333",
+            cursor: "pointer", outline: "none",
           }}>
           <option value="id">Sort: #ID</option>
           <option value="name">Sort: Name</option>
