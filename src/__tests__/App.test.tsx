@@ -31,7 +31,6 @@ describe("Listing page", () => {
   });
 });
 
-// ADD below existing describe block
 describe("Search filtering", () => {
   it("filters by name as user types", async () => {
     const user = userEvent.setup();
@@ -67,3 +66,42 @@ describe("Search filtering", () => {
     expect(screen.getByTestId("no-results")).toBeInTheDocument();
   });
 });
+
+describe("Type filters", () => {
+  it("renders type filter chips after load", async () => {
+    render(<App />);
+    await waitFor(() => {
+      expect(screen.getByTestId("type-filter-fire")).toBeInTheDocument();
+    });
+  });
+
+  it("filters to only fire Pokemon when fire chip clicked", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await waitFor(() => screen.getAllByTestId("pokemon-card"));
+    await user.click(screen.getByTestId("type-filter-fire"));
+    expect(screen.getByText("charmander")).toBeInTheDocument();
+    expect(screen.queryByText("bulbasaur")).not.toBeInTheDocument();
+  });
+
+  it("supports multi-select", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await waitFor(() => screen.getAllByTestId("pokemon-card"));
+    await user.click(screen.getByTestId("type-filter-fire"));
+    await user.click(screen.getByTestId("type-filter-water"));
+    expect(screen.getByText("charmander")).toBeInTheDocument();
+    expect(screen.getByText("squirtle")).toBeInTheDocument();
+    expect(screen.queryByText("bulbasaur")).not.toBeInTheDocument();
+  });
+
+  it("clear button resets all filters", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await waitFor(() => screen.getAllByTestId("pokemon-card"));
+    await user.click(screen.getByTestId("type-filter-fire"));
+    await user.click(screen.getByText("clear"));
+    expect(screen.getAllByTestId("pokemon-card")).toHaveLength(3);
+  });
+});
+
