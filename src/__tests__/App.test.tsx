@@ -137,3 +137,37 @@ describe("Error handling", () => {
     });
   });
 });
+
+describe("Detail page", () => {
+  it("navigates to detail when card is clicked", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await waitFor(() => screen.getAllByTestId("pokemon-card"));
+    await user.click(screen.getByText("bulbasaur"));
+    await waitFor(() => {
+      expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("bulbasaur");
+    });
+  });
+
+  it("shows Base Stats on detail page", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await waitFor(() => screen.getAllByTestId("pokemon-card"));
+    await user.click(screen.getByText("bulbasaur"));
+    await waitFor(() => {
+      expect(screen.getByText("Base Stats")).toBeInTheDocument();
+    });
+  });
+
+  it("navigates back to list", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await waitFor(() => screen.getAllByTestId("pokemon-card"));
+    await user.click(screen.getByText("bulbasaur"));
+    await waitFor(() => screen.getByRole("heading", { level: 1 }));
+    await user.click(screen.getAllByText(/← back/i)[0]);
+    await waitFor(() => {
+      expect(screen.getAllByTestId("pokemon-card")).toHaveLength(3);
+    });
+  });
+});

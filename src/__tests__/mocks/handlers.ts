@@ -37,4 +37,28 @@ export const handlers = [
   http.get("https://pokeapi.co/api/v2/pokemon/bulbasaur", () => HttpResponse.json(bulbasaur)),
   http.get("https://pokeapi.co/api/v2/pokemon/charmander", () => HttpResponse.json(charmander)),
   http.get("https://pokeapi.co/api/v2/pokemon/squirtle", () => HttpResponse.json(squirtle)),
+  http.get("https://pokeapi.co/api/v2/pokemon-species/bulbasaur", () =>
+    HttpResponse.json({
+      name: "bulbasaur",
+      flavor_text_entries: [
+        { flavor_text: "A strange seed.", language: { name: "en" }, version: { name: "red" } },
+      ],
+    })
+  ),
+  http.get("https://pokeapi.co/api/v2/pokemon-species/charmander", () =>
+    HttpResponse.json({
+      name: "charmander",
+      flavor_text_entries: [
+        { flavor_text: "It has a preference for hot things.", language: { name: "en" }, version: { name: "red" } },
+      ],
+    })
+  ),
+  http.get("https://pokeapi.co/api/v2/pokemon-species/squirtle", () =>
+    HttpResponse.json({
+      name: "squirtle",
+      flavor_text_entries: [
+        { flavor_text: "After birth, its back swells and hardens into a shell.", language: { name: "en" }, version: { name: "red" } },
+      ],
+    })
+  ),
 ];
