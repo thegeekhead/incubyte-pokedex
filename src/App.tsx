@@ -1,9 +1,10 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback } from "react";
 import type { Pokemon } from "./types";
 import { usePokemonList } from "./hooks/usePokemonList";
 import { PokemonCard } from "./components/PokemonCard";
 import { CardSkeleton } from "./components/CardSkeleton";
 import { Header } from "./components/Header";
+import { DetailPage } from "./components/DetailPage";
 
 export default function App() {
   const { pokemon, loading, error } = usePokemonList();
@@ -42,6 +43,15 @@ export default function App() {
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
     );
   }, []);
+
+  if (selected) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#FAFAF7" }}>
+        <Header onBack={() => setSelected(null)} />
+        <DetailPage nameOrId={selected.name} onBack={() => setSelected(null)} />
+      </div>
+    );
+  }
 
   return (
     <div style={{ minHeight: "100vh", background: "#FAFAF7" }}>
